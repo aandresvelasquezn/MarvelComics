@@ -1,6 +1,7 @@
 package main
 
 import (
+	pingcontroller "github.com/aandresvelasquezn/MarvelComics/internal/Controller/Ping"
 	"github.com/gin-gonic/gin"
 )
 
@@ -9,10 +10,6 @@ func main() {
 	//fmt.Println(dotenv)
 	//tools.GetComics()
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	r.GET("/ping", pingcontroller.Ping)
 	r.Run()
 }
