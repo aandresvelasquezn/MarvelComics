@@ -12,7 +12,7 @@ func digestString(t string, publicKey string, privateKey string) string {
 // GenerateHash Generate Hash code
 func GenerateHash() string {
 	t := "1"
-	privateKey := GetDotEnvVariable("PRIVATE_KEY")
-	publicKey := GetDotEnvVariable("PUBLIC_KEY")
+	privateKey := DotEnvVariable("PRIVATE_KEY")
+	publicKey := DotEnvVariable("PUBLIC_KEY")
 	return digestString(t, publicKey, privateKey)
 }

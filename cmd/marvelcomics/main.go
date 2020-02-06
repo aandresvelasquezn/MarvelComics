@@ -1,15 +1,33 @@
 package main
 
 import (
+	"net/http"
+
 	pingcontroller "github.com/aandresvelasquezn/MarvelComics/internal/Controller/Ping"
+	"github.com/aandresvelasquezn/MarvelComics/tools"
 	"github.com/gin-gonic/gin"
 )
 
+var router *gin.Engine
+
 func main() {
-	//dotenv := tools.GetDotEnvVariable("PUBLIC_KEY")
-	//fmt.Println(dotenv)
-	//tools.GetComics()
-	r := gin.Default()
-	r.GET("/ping", pingcontroller.Ping)
-	r.Run()
+	//tools.Comics()
+	tools.ComicByID(376)
+	router = gin.Default()
+	initRoutes()
+	router.Run()
+}
+
+func initRoutes() {
+	router.GET("/ping", pingcontroller.Ping)
+}
+
+// Test edd
+func Test() {
+	router.GET("/user/:name", func(c *gin.Context) {
+		user := c.Params.ByName("name")
+		//value, ok := db[user]
+		c.JSON(http.StatusOK, gin.H{"user": user, "value": "1"})
+
+	})
 }

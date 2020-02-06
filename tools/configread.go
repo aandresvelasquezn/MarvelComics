@@ -7,11 +7,11 @@ import (
 	"github.com/joho/godotenv"
 )
 
-//GetDotEnvVariable Get value from Key in .env
-func GetDotEnvVariable(key string) string {
+//DotEnvVariable Get value from Key in .env
+func DotEnvVariable(key string) string {
 
 	// load .env file
-	err := godotenv.Load("configs/.envdev")
+	err := godotenv.Load("configs/.env")
 
 	if err != nil {
 		log.Fatalf("Error loading .env file")

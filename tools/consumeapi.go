@@ -1,21 +1,18 @@
 package tools
 
 import (
+	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
+	"strconv"
 	"time"
+
+	comic "github.com/aandresvelasquezn/MarvelComics/internal/Model/Comic"
 )
 
-// Comic Estructura
-type Comic struct {
-	Code   int    `json:"code"`
-	Status string `json:"status"`
-}
-
-// GetComics Get all comics list
-func GetComics() {
-	var urlAPI = "https://gateway.marvel.com:443/v1/public/comics?apikey=" + GetDotEnvVariable("PUBLIC_KEY") + "&ts=1&hash="
+// Comics Get all comics list
+func Comics() {
+	var urlAPI = DotEnvVariable("URL_REQUEST_COMIC") + "?apikey=" + DotEnvVariable("PUBLIC_KEY") + "&ts=1&hash="
 
 	var cliente = &http.Client{Timeout: 10 * time.Second}
 	hashCode := GenerateHash()
@@ -26,16 +23,38 @@ func GetComics() {
 		panic(err.Error())
 	}
 
-	data, _ := ioutil.ReadAll(response.Body)
-	fmt.Println(string(data))
+	var comics comic.DataWrapper
 
-	// var comics []Comic
+	err = json.NewDecoder(response.Body).Decode(&comics)
 
-	// err = json.NewDecoder(data).Decode(&comics)
+	if err != nil {
+		panic(err.Error())
+	}
+	fmt.Println(comics)
+}
 
-	// if err != nil {
-	// 	panic(err.Error())
-	// }go get -u github.com/golang/dep/cmd/dep
+//ComicByID Get comic data by Id
+func ComicByID(comicID int) {
 
-	// fmt.Println(comics)∫
+	comID := strconv.Itoa(comicID)
+	var urlAPI = DotEnvVariable("URL_REQUEST_COMIC") + "/" + comID + "?apikey=" + DotEnvVariable("PUBLIC_KEY") + "&ts=1&hash="
+
+	var cliente = &http.Client{Timeout: 10 * time.Second}
+	hashCode := GenerateHash()
+	response, err := cliente.Get(fmt.Sprintf(urlAPI + "" + hashCode))
+	fmt.Println(urlAPI + "" + hashCode)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	var comic comic.DataWrapper
+
+	err = json.NewDecoder(response.Body).Decode(&comic)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	fmt.Println(comic)
 }
