@@ -11,7 +11,6 @@ import (
 var router *gin.Engine
 
 func main() {
-	//tools.Comics()
 	tools.ComicByID(376)
 	gin.SetMode(gin.ReleaseMode)
 	router = gin.Default()
