@@ -11,10 +11,13 @@ import (
 func DotEnvVariable(key string) string {
 
 	// load .env file
-	err := godotenv.Load("configs/.env")
+	_, err := os.Stat("configs/.env")
+	if !os.IsNotExist(err) {
+		err = godotenv.Load(os.ExpandEnv("configs/.env"))
+	}
 
 	if err != nil {
-		log.Fatalf("Error loading .env file")
+		log.Println(err)
 	}
 
 	return os.Getenv(key)

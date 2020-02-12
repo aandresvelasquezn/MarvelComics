@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	comic "github.com/aandresvelasquezn/MarvelComics/internal/Model/Comic"
+	comic "github.com/aandresvelasquezn/MarvelComics/internal/model"
 )
 
 // Comics Get all comics list

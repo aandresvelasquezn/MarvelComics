@@ -13,9 +13,10 @@ var router *gin.Engine
 func main() {
 	//tools.Comics()
 	tools.ComicByID(376)
+	gin.SetMode(gin.ReleaseMode)
 	router = gin.Default()
 	initRoutes()
-	router.Run()
+	router.Run(":8081")
 }
 
 func initRoutes() {
